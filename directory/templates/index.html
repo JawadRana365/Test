@@ -1,5 +1,5 @@
 {% load crispy_forms_tags %}
-{% load table_tags %}
+{% load render_table from django_tables2 %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -60,6 +60,9 @@
     <h1><i>TEST</i></h1>
     <hr />
   </center>
+   <div class="row">
+      <a class="btn btn-default pull-right" href="{% url 'bulkupload' %}">Upload Data From File</a>
+   </div>
 
   <div class="row">
 
@@ -88,7 +91,10 @@
         </div>
     </div>
   </div>
-
+<hr>
+<center><h2><strong>Avalible Data</strong></h2></center>
+<center><h6>Please click on the table header to use sorting</h6></center>
+<hr>
   <div class="row">
     {% render_table teachers %}
   </div>
@@ -104,8 +110,7 @@
     });
 
     $(document).ready(function($) {
-        $("tr").click(function() {  
-          alert(this.cells[0].innerHTML);
+        $("tr").click(function() { 
           window.location.href = "/profile/"+this.cells[0].innerHTML;
         });
     });

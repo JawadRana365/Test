@@ -24,4 +24,5 @@ urlpatterns = [
     path('', views.index, name="test"),
     path('subject/', views.subject, name="subject"),
     path('profile/<int:item_id>',views.profile,name="profile"),
+    path('bulkupload/', views.bulkupload, name="bulkupload"),
 ] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

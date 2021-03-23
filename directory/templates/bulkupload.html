@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!--style-->
+  <style>
+  .card {
+
+   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5),
+               0 6px 20px 0 rgba(0,0,0,0.39);
+   background: lightpink;
+   margin-bottom : 5%;
+   border-radius: 25px;
+   padding : 2%;
+   overflow: auto;
+   resize: both;
+   text-overflow: ellipsis;
+  }
+  .card:hover{
+    background: lightblue;
+  }
+
+  .submit_form{
+
+    text-align: center;
+    padding: 3%;
+    background: lightgray;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4),
+                0 6px 20px 0 rgba(0,0,0,0.36);
+  }
+
+  .field-margin{
+      margin: 5px;
+  }
+  </style>
+
+</head>
+
+<body  class="container-fluid">
+
+
+{% block content %}
+
+<div class="jumbotron">
+    <center class="row">
+        <h1>Bulk Upload</h1>
+    </center>
+</div>
+
+<div class="row"> 
+    <div class="col-md-6 col-md-offset-3">
+        <div  class="submit_form">
+            <form id="Bulk-form" action="{% url 'bulkupload' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Bulk Data CSV:</label><input type="file" id="BulkCSV" name="BulkCSVFile" required class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Upload Bulk Data" />
+                </div>
+            </form>
+        </div>
+    </div> 
+</div>
+
+
+{% endblock %}
+{% block scripts %}
+
+{% load static %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+
+<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app/scripts/jquery-3.4.1.slim.js' %}"></script>
+<script src="{% static 'app/scripts/bootstrap.js' %}"></script>
+<script src="{% static 'app/scripts/respond.js' %}"></script>
+<script src="{%  static 'sweetalert/sweetalert.min.js' %}"></script>
+<script>
+    var var_msg='{{ msg }}';
+    if (var_msg == 'True'){
+        swal("Done!", "CSV File Uploaded and Saved!", "success");
+    }
+
+    if (var_msg == 'Unable to upload file'){
+        swal("Try Again!", "Error in CSV file!", "warning");
+    }
+    if (var_msg == 'File is not CSV type'){
+        swal("Try Again!", "File is not CSV type", "warning");
+    }
+
+</script>
+{% endblock %}
